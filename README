@@ -1,0 +1,6 @@
+Configuration files for my linux environment.
+Has some WIP configs for Hyprland, and my own colorscheme for alacritty.
+Features a custom prompt using nafprompt, and basic aliases to manage my Archlinux Installation.
+All binaries are compiled for x86_64
+
+All licensed under GPL, version 3

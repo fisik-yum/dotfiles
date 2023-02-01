@@ -1,0 +1,31 @@
+{
+    "layer": "top",
+"position": "bottom",
+"height":30,
+    "modules-right": ["wireplumber","network","backlight","battery", "clock"],
+    "battery": {
+        "format": "{capacity}% discharging",
+	"format-charging": "{capacity}% charging",
+	"format-plugged": "{capacity}% plugged in"
+    },
+    "clock": {
+        "format-alt": "{:%a, %d. %b  %H:%M}"
+    },
+    "backlight":{
+	"format": "Brightness {percent}%",
+        "on-click-right": "brightnessctl set 10%-",
+        "on-click": "brightnessctl set +10%",
+},
+"wireplumber": {
+    "format": "{node_name} {volume}%",
+    "on-click": "pw-volume change +0.25%",
+    "on-click-right":"pw-volume change -0.25%",
+    "on-click-middle":"pavucontrol",
+},
+"network":{
+"format-wifi":"Connected to {essid}",
+"format-ethernet":"{ifname}",
+"format-disconnected": "Disconnected",
+"on-click":"nm-connection-editor",
+},
+}

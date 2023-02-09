@@ -1,0 +1,7 @@
+#!/bin/bash
+export STANDBY_PROMPT="{:text:red;;bold}{user}@{host} {:text:white;;bold}\W {:text:lblue;;bold}/#/ {:text:;;}"
+nafswitch() {
+    PROMPT_BUF=$PROMPT
+    PROMPT=$STANDBY_PROMPT
+    STANDBY_PROMPT=$PROMPT_BUF
+}

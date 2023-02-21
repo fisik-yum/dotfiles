@@ -22,7 +22,7 @@ PATH="$PATH:/$HOME/bin"
 
 #nafprompt configuration
 
-export PROMPT="{:text:red;;bold}{user}@{host} {:text:white;;bold}\W{:text:lcyan;;bold} {:go:(go: %s) }{:text:green;;bold}{:git:(branch: %b) }{:text:lblue;;bold}/#/ {:text:;;}"
+export PROMPT=" {:text:white;;bold}[\w]{:text:lcyan;;bold} {:go:(go: %s) }{:text:green;;bold}{:git:(branch: %b) }{:text:yellow;;bold}-> {:text:;;}"
 
 naf_prompt() { 
     export PS1=$(nafprompt); 
@@ -30,5 +30,6 @@ naf_prompt() {
 PROMPT_COMMAND=naf_prompt
 
 source $HOME/bin/ps1exp
-STANDBY_PROMPT="{:text:red;;bold}{user}@{host} {:text:white;;bold}\W{:text:lcyan;;bold} {:go:(go: %s) }{:text:lblue;;bold}/#/ {:text:;;}"
+STANDBY_PROMPT=" {:text:white;;bold}[\w]{:text:lcyan;;bold} {:go:(go: %s) }{:text:green;;bold}{:text:yellow;;bold}-> {:text:;;}"
+
 

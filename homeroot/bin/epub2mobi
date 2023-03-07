@@ -1,0 +1,32 @@
+#!/bin/sh
+
+while getopts ":f:o:" flag
+do
+    case "${flag}" in
+        f)infolder=${OPTARG};;
+	o)outfolder=${OPTARG};;
+    esac
+done
+
+if [ "$infolder" ==  "" ] || [ ! -d "$infolder" ]
+then
+echo "Specify valid subdirectory with -f"
+exit 1
+fi
+
+if [ "$outfolder" == "" ]
+then
+outfolder="kindlegen_out"
+fi
+
+if [ ! -d "$outfolder" ] 
+then
+mkdir "$outfolder" 
+fi
+
+for entry in `ls "$infolder"`; do
+    kindlegen $infolder/$entry
+done
+
+mv $infolder/*.mobi $outfolder/
+

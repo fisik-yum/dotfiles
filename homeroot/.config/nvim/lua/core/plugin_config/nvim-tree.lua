@@ -25,10 +25,19 @@ renderer = {
               symlink = "SYM",
               symlink_open = "SYM(O)",
             },
+	git = {
+              unstaged = "X",
+              staged = "V",
+              unmerged = "UM",
+              renamed = "RN",
+              untracked = "UT",
+              deleted = "DEL",
+              ignored = "IGN",
+            },
           },
 	  show={
 	     file=false,
-	  }
+	  },
         },
         special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md","go.mod","go.sum" },
         symlink_destination = true,

@@ -1,5 +1,22 @@
 #!/bin/bash
-project=$(go list -m)
+
+export project=$(go list -m) #get project name
+
+build() { 
+    go build -ldflags "-s -w"; 
+}
+
+postbuild(){
+	echo "Copying files"
+	mv "$project" build/
+	
+}
+
+execute(){
+	cd build || exit 
+	./"$project"
+}
+
 echo "Building project $project"
 if [ -d "build" ] 
 then
@@ -7,10 +24,7 @@ then
 else
 	mkdir build/
 fi
-go build #-ldflags "-s -w"
-echo "Copying files"
-mv "$project" build/
-cp -r data/* build/
-cd build || exit 
-#stty -icanon
-./"$project" -f "$1"
+
+build
+postbuild
+execute

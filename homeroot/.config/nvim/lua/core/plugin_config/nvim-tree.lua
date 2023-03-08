@@ -6,8 +6,33 @@ respect_buf_cwd = false,
 update_focused_file = {
 enable = true,
 update_root = true,
-
 },
+respect_buf_cwd=true,
+renderer = {
+        icons = {
+          glyphs = {
+            default = "FL",
+            symlink = "SYM",
+            bookmark = "BK",
+            modified = "M",
+            folder = {
+              arrow_closed = ">",
+              arrow_open = "^",
+              default = "FLR",
+              open = "FLR(O)",
+              empty = "FLR(E)",
+              empty_open = "FLR(O,E)",
+              symlink = "SYM",
+              symlink_open = "SYM(O)",
+            },
+          },
+	  show={
+	     file=false,
+	  }
+        },
+        special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md","go.mod","go.sum" },
+        symlink_destination = true,
+      },
 })
 
 local nvim_tree_events = require('nvim-tree.events')

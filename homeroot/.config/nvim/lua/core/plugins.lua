@@ -11,7 +11,7 @@ end
 
 local packer_bootstrap = ensure_packer()
 
-require('packer').startup(function(use)
+return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use 'nvim-lualine/lualine.nvim'
 
@@ -42,9 +42,8 @@ require('packer').startup(function(use)
       {'rafamadriz/friendly-snippets'}, -- Optional
     }
   }
-  use "hrsh7th/nvim-cmp"
-  use "hrsh7th/cmp-nvim-lsp"
 
+  use {'lewis6991/gitsigns.nvim'}
 
   if packer_bootstrap then
     require('packer').sync()

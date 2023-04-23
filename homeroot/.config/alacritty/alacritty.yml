@@ -1,26 +1,29 @@
 colors:
-  # Default colors
   primary:
-    background: '0x010f24'#'0x282a36'
-    foreground: '0xf8f8f2'
- 
-  # Normal colors
+    background: '#010f24'
+    foreground: '#ffffff'
+
   normal:
-    black:   '0x000000'
-    red:     '0xd70000'
-    green:   '0x08c96e'
-    yellow:  '0xe1f50a'
-    blue:    '0x3066b8'
-    magenta: '0xb904bf'
-    cyan:    '0x02bd9f'
-    white:   '0xffffff'
-  # Bright colors
+    black:   '#000000'
+    red:     '#d70000'
+    green:   '#08c96e'
+    yellow:  '#e1f50a'
+    blue:    '#3066b8'
+    magenta: '#b904bf'
+    cyan:    '#02bd9f'
+    white:   '#ffffff'
+    
   bright:
-    black:   '0x000000'
-    red:     '0xf52727'
-    green:   '0x00ff87'
-    yellow:  '0xf1fa8c'
-    blue:    '0x3b8bed'
-    magenta: '0xd700df'
-    cyan:    '0x00ffd7'
-    white:   '0xffffff'
+    black:   '#000000'
+    red:     '#f52727'
+    green:   '#00ff87'
+    yellow:  '#f1fa8c'
+    blue:    '#3b8bed'
+    magenta: '#d700df'
+    cyan:    '#00ffd7'
+    white:   '#ffffff'
+font:
+    normal:
+        family: IBM PLex Mono  
+    size: 12.0
+

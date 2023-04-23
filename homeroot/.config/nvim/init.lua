@@ -15,6 +15,3 @@ vim.api.nvim_create_user_command("Nvimreload",function()
   vim.cmd([[source ~/.config/nvim/init.lua]])
 end,{})
 
---Stuff to run
-vim.cmd([[NvimTreeOpen]])
-

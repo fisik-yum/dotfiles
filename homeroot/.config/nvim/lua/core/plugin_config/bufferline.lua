@@ -1,6 +1,12 @@
 require("bufferline").setup{
- icon_close_tab = 'X',
- icon_pinned = '<-',
- icons = false,
+ icons = {
+     button = 'X',
+     filetype = { 
+         enabled = false,
+        },
+        pinned = {
+            button = '<-', filename = true
+        },
+    }
 }
 

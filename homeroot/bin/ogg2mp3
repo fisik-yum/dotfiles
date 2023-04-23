@@ -1,0 +1,36 @@
+#!/bin/sh
+
+while getopts ":f:o:" flag
+do
+    case "${flag}" in
+        f)infolder=${OPTARG};;
+	o)outfolder=${OPTARG};;
+    esac
+done
+
+if [ "$infolder" ==  "" ] || [ ! -d "$infolder" ]
+then
+echo "Specify valid subdirectory with -f"
+exit 1
+fi
+
+if [ "$outfolder" == "" ]
+then
+outfolder="ogg2mp3_out"
+fi
+
+if [ ! -d "$outfolder" ] 
+then
+mkdir "$outfolder" 
+fi
+
+
+for entry in `ls -a $infolder| grep ".ogg"`; do
+    $echo $entry
+    cfilename=$(basename --suffix=.ogg $entry)
+    ffname=$cfilename.mp3
+    #echo $ffname
+    ffmpeg -n -i $infolder/$entry -c:a libmp3lame -q:a 1 -map_metadata 0 -map_metadata 0:s:0 -id3v2_version 3 -vn $infolder/$ffname
+done
+
+mv $infolder/*.mp3 $outfolder/

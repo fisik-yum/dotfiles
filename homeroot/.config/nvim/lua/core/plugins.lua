@@ -44,7 +44,7 @@ return require('packer').startup(function(use)
   }
 
   use {'lewis6991/gitsigns.nvim'}
-
+  use {'mg979/vim-visual-multi'}
   if packer_bootstrap then
     require('packer').sync()
 

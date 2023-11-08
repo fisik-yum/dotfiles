@@ -138,7 +138,7 @@ renderer = {
 	     file=false,
 	  },
         },
-        special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md","go.mod","go.sum" },
+        special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md","go.mod","go.sum","build.sh" },
         symlink_destination = true,
       },
 })
@@ -166,10 +166,8 @@ end)
 require("toggleterm").setup()
 
 --Keymaps
-vim.keymap.set({"n","v","i"},"<C-s>","<Cmd>w<CR>")
-vim.keymap.set({"n","v","i"},"<C-q>","<Cmd>q!<CR>")
-vim.keymap.set({"n","v","i"},"<C-w>","<esc>:bnext<CR>")
-
+vim.keymap.set({"n"},"<tab>","<Cmd>bnext<CR>")
+vim.keymap.set({"n"},"<c-w>","<Cmd>NvimTreeToggle<CR>")
 --Preferences
 vim.opt.termguicolors = true
 vim.cmd([[colorscheme gruvbox]]) 

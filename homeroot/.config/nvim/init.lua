@@ -21,7 +21,7 @@ require('packer').startup(function(use)
     use 'nvim-lualine/lualine.nvim'
 
     use { 'nvim-tree/nvim-tree.lua' }
-    use { 'romgrk/barbar.nvim' }
+    --    use { 'romgrk/barbar.nvim' }
     use { "ellisonleao/gruvbox.nvim" }
     use { "akinsho/toggleterm.nvim", tag = '*' }
 
@@ -55,7 +55,7 @@ require('packer').startup(function(use)
     end
 end)
 
---BUFFERLINE
+--[[BUFFERLINE
 require("bufferline").setup {
     icons = {
         button = 'X',
@@ -67,6 +67,7 @@ require("bufferline").setup {
         },
     }
 }
+]]
 
 --COMPLETE
 local cmp = require('cmp')
@@ -147,7 +148,7 @@ require("nvim-tree").setup({
     },
 })
 
-local nvim_tree_events = require('nvim-tree.events')
+--[[local nvim_tree_events = require('nvim-tree.events')
 local bufferline_api = require('bufferline.api')
 
 local function get_tree_size()
@@ -165,13 +166,13 @@ end)
 nvim_tree_events.subscribe('TreeClose', function()
     bufferline_api.set_offset(0)
 end)
-
+]]
 --TOGGLETERM
 require("toggleterm").setup()
 
 --Keymaps
 vim.keymap.set({ "n" }, "<tab>", "<Cmd>bnext<CR>")
-vim.keymap.set({ "n" }, "<c-w>", "<Cmd>NvimTreeToggle<CR>")
+vim.keymap.set({ "n" }, "<c-l>", "<Cmd>NvimTreeToggle<CR>")
 --Preferences
 vim.opt.termguicolors = true
 vim.cmd([[colorscheme gruvbox]])
@@ -182,6 +183,10 @@ vim.cmd([[set shiftwidth=4]])
 vim.cmd([[set expandtab]])
 
 --Commands
-vim.api.nvim_create_user_command("Nvimreload", function()
+vim.api.nvim_create_user_command("Tt", function()
+    vim.cmd([[ToggleTerm]])
+end, {})
+
+vim.api.nvim_create_user_command("Nvr", function()
     vim.cmd([[source ~/.config/nvim/init.lua]])
 end, {})

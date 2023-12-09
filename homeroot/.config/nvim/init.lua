@@ -55,20 +55,6 @@ require('packer').startup(function(use)
     end
 end)
 
---[[BUFFERLINE
-require("bufferline").setup {
-    icons = {
-        button = 'X',
-        filetype = {
-            enabled = false,
-        },
-        pinned = {
-            button = '<-', filename = true
-        },
-    }
-}
-]]
-
 --COMPLETE
 local cmp = require('cmp')
 cmp.setup({

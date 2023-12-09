@@ -67,9 +67,7 @@ cmp.setup({
     }),
     sources = cmp.config.sources({
         { name = 'nvim_lsp' }
-    }--[[, {
-        { name = 'buffer' }
-    }]])
+    })
 })
 
 --GITSIGNS
@@ -89,6 +87,12 @@ lsp.on_attach(function(client, bufnr)
     lsp.default_keymaps({ buffer = bufnr })
     lsp.buffer_autoformat()
 end)
+
+require('lualine').setup {
+    options = {
+        icons_enabled = false,
+    }
+}
 
 --NVIM-TREE
 require("nvim-tree").setup({
@@ -148,6 +152,7 @@ vim.cmd([[set clipboard=unnamedplus]])
 vim.cmd([[set tabstop=4]])
 vim.cmd([[set shiftwidth=4]])
 vim.cmd([[set expandtab]])
+vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { noremap = true, silent = true })
 
 --Commands
 vim.api.nvim_create_user_command("Tt", function()

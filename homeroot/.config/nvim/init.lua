@@ -21,7 +21,6 @@ require('packer').startup(function(use)
     use 'nvim-lualine/lualine.nvim'
 
     use { 'nvim-tree/nvim-tree.lua' }
-    --    use { 'romgrk/barbar.nvim' }
     use { "ellisonleao/gruvbox.nvim" }
     use { "akinsho/toggleterm.nvim", tag = '*' }
 
@@ -50,6 +49,8 @@ require('packer').startup(function(use)
 
     use { 'lewis6991/gitsigns.nvim' }
     use { 'mg979/vim-visual-multi' }
+    use { 'm4xshen/autoclose.nvim' }
+
     if packer_bootstrap then
         require('packer').sync()
     end
@@ -91,6 +92,7 @@ end)
 require('lualine').setup {
     options = {
         icons_enabled = false,
+        section_separators = { left = '', right = '' }
     }
 }
 
@@ -141,8 +143,16 @@ require("nvim-tree").setup({
 --TOGGLETERM
 require("toggleterm").setup()
 
+--nvim-autopairs
+require("autoclose").setup({
+    options = {
+        disabled_filetypes = { "text", "markdown" },
+    },
+})
+
 --Keymaps
-vim.keymap.set({ "n" }, "<tab>", "<Cmd>bnext<CR>")
+vim.keymap.set({ "n" }, "<tab>", "<Cmd>tabnext<CR>")
+vim.keymap.set({ "n" }, "<s-tab>", "<Cmd>tabnext<CR>")
 vim.keymap.set({ "n" }, "<c-l>", "<Cmd>NvimTreeToggle<CR>")
 --Preferences
 vim.opt.termguicolors = true

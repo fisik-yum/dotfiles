@@ -50,14 +50,6 @@ require('packer').startup(function(use)
     use { 'lewis6991/gitsigns.nvim' }
     use { 'mg979/vim-visual-multi' }
     use { 'm4xshen/autoclose.nvim' }
-    use({
-        "NStefan002/speedtyper.nvim",
-        config = function()
-            require("speedtyper").setup({
-                -- your config
-            })
-        end,
-    })
     if packer_bootstrap then
         require('packer').sync()
     end

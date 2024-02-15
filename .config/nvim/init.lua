@@ -50,7 +50,14 @@ require('packer').startup(function(use)
     use { 'lewis6991/gitsigns.nvim' }
     use { 'mg979/vim-visual-multi' }
     use { 'm4xshen/autoclose.nvim' }
-
+    use({
+        "NStefan002/speedtyper.nvim",
+        config = function()
+            require("speedtyper").setup({
+                -- your config
+            })
+        end,
+    })
     if packer_bootstrap then
         require('packer').sync()
     end
@@ -98,7 +105,6 @@ require('lualine').setup {
 
 --NVIM-TREE
 require("nvim-tree").setup({
-    respect_buf_cwd = false,
     update_focused_file = {
         enable = true,
         update_root = true,
@@ -151,9 +157,12 @@ require("autoclose").setup({
 })
 
 --Keymaps
+vim.g.mapleader = ","
 vim.keymap.set({ "n" }, "<tab>", "<Cmd>tabnext<CR>")
-vim.keymap.set({ "n" }, "<s-tab>", "<Cmd>tabnext<CR>")
-vim.keymap.set({ "n" }, "<c-l>", "<Cmd>NvimTreeToggle<CR>")
+vim.keymap.set({ "n" }, "<Leader>l", "<Cmd>NvimTreeToggle<CR>")
+vim.keymap.set({ "n", "v", "i" }, "<C-k>", "<cmd>lua vim.lsp.buf.hover()<cr>")
+vim.keymap.set({ "n" }, "<Leader>t", "<cmd>ToggleTerm<cr>")
+
 --Preferences
 vim.opt.termguicolors = true
 vim.cmd([[colorscheme gruvbox]])
@@ -162,13 +171,12 @@ vim.cmd([[set clipboard=unnamedplus]])
 vim.cmd([[set tabstop=4]])
 vim.cmd([[set shiftwidth=4]])
 vim.cmd([[set expandtab]])
-vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { noremap = true, silent = true })
 
---Commands
-vim.api.nvim_create_user_command("Tt", function()
-    vim.cmd([[ToggleTerm]])
-end, {})
-
-vim.api.nvim_create_user_command("Nvr", function()
-    vim.cmd([[source ~/.config/nvim/init.lua]])
-end, {})
+vim.diagnostic.config({
+    virtual_text = true,
+    signs = true,
+    update_in_insert = false,
+    underline = true,
+    severity_sort = false,
+    float = true,
+})

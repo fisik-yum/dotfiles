@@ -4,7 +4,7 @@ while getopts ":f:o:" flag
 do
     case "${flag}" in
         f)infolder=${OPTARG};;
-	o)outfolder=${OPTARG};;
+	    o)outfolder=${OPTARG};;
     esac
 done
 

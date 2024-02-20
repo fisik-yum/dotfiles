@@ -157,7 +157,7 @@ require("autoclose").setup({
 })
 
 --Keymaps
-vim.g.mapleader = ","
+vim.g.mapleader = " "
 vim.keymap.set({ "n" }, "<tab>", "<Cmd>tabnext<CR>")
 vim.keymap.set({ "n" }, "<Leader>l", "<Cmd>NvimTreeToggle<CR>")
 vim.keymap.set({ "n", "v", "i" }, "<C-k>", "<cmd>lua vim.lsp.buf.hover()<cr>")

@@ -3,49 +3,46 @@ vim.g.loaded_netrwPlugin = 1
 
 
 --Pluginload
-local function bootstrap_pckr()
-    local pckr_path = vim.fn.stdpath("data") .. "/pckr/pckr.nvim"
 
-    if not vim.loop.fs_stat(pckr_path) then
-        vim.fn.system({
-            'git',
-            'clone',
-            "--filter=blob:none",
-            'https://github.com/lewis6991/pckr.nvim',
-            pckr_path
-        })
-    end
-
-    vim.opt.rtp:prepend(pckr_path)
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
+vim.opt.rtp:prepend(lazypath)
 
-bootstrap_pckr()
-
-require('pckr').add {
+require('lazy').setup({
     'wbthomason/packer.nvim',
     'nvim-lualine/lualine.nvim',
     'nvim-tree/nvim-tree.lua',
     'ellisonleao/gruvbox.nvim',
     'akinsho/toggleterm.nvim',
 
-    { 'VonHeikemen/lsp-zero.nvim',
+    {
+        'VonHeikemen/lsp-zero.nvim',
         branch = 'v1.x',
-        requires = {
+        dependencies = {
             -- LSP Support
-            'neovim/nvim-lspconfig',               -- Required
-            'williamboman/mason.nvim',             -- Optional
-            'williamboman/mason-lspconfig.nvim',   -- Optional
+            'neovim/nvim-lspconfig',             -- Required
+            'williamboman/mason.nvim',           -- Optional
+            'williamboman/mason-lspconfig.nvim', -- Optional
             -- Autocompletion
-            'hrsh7th/nvim-cmp',                    -- Required
-            'hrsh7th/cmp-nvim-lsp',                -- Required
-            'hrsh7th/cmp-buffer',                  -- Optional
-            'hrsh7th/cmp-path',                    -- Optional
-            'saadparwaiz1/cmp_luasnip',            -- Optional
-            'hrsh7th/cmp-nvim-lua',                -- Optional
+            'hrsh7th/nvim-cmp',                  -- Required
+            'hrsh7th/cmp-nvim-lsp',              -- Required
+            'hrsh7th/cmp-buffer',                -- Optional
+            'hrsh7th/cmp-path',                  -- Optional
+            'saadparwaiz1/cmp_luasnip',          -- Optional
+            'hrsh7th/cmp-nvim-lua',              -- Optional
 
             -- Snippets
-            'L3MON4D3/LuaSnip',               -- Required
-            'rafamadriz/friendly-snippets',   -- Optional
+            'L3MON4D3/LuaSnip',             -- Required
+            'rafamadriz/friendly-snippets', -- Optional
         },
     },
 
@@ -54,7 +51,7 @@ require('pckr').add {
     'mg979/vim-visual-multi',
     'm4xshen/autoclose.nvim',
 
-}
+})
 
 --COMPLETE
 local cmp = require('cmp')
@@ -152,9 +149,12 @@ require("autoclose").setup({
 --Keymaps
 vim.g.mapleader = " "
 vim.keymap.set({ "n" }, "<tab>", "<Cmd>tabnext<CR>")
+vim.keymap.set({ "n", "v", "i" }, "<C-k>", "<cmd>lua vim.lsp.buf.hover()<CR>")
 vim.keymap.set({ "n" }, "<Leader>l", "<Cmd>NvimTreeToggle<CR>")
-vim.keymap.set({ "n", "v", "i" }, "<C-k>", "<cmd>lua vim.lsp.buf.hover()<cr>")
-vim.keymap.set({ "n" }, "<Leader>t", "<cmd>ToggleTerm<cr>")
+vim.keymap.set({ "n" }, "<Leader>tt", "<cmd>ToggleTerm<CR>")
+vim.keymap.set({ "n" }, "<Leader>tn", "<cmd>tabnew<CR>")
+vim.keymap.set({ "n" }, "<Leader>tq", "<cmd>tabclose<CR>")
+vim.keymap.set({ "n" }, "<Leader>f", "<cmd>LspZeroFormat<CR>")
 
 --Preferences
 vim.opt.termguicolors = true

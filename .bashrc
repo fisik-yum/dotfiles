@@ -9,7 +9,7 @@ init ()
 {
     PATH="$PATH:/$HOME/bin"
     source qcd.bash
-    QCD_MINIMUMLINES=3   
+    QCD_MINIMUMLINES=100   
     qcd_init
     load
 }

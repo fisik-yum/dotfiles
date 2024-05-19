@@ -18,7 +18,6 @@ init ()
 load ()
 {
     pfetch 
-    bind 'TAB:menu-complete'
     alias ls='ls -a --color=auto'
     alias shellreload='clear && load'
     alias clearpkg='sudo pacman -Rns $(pacman -Qtdq)'

@@ -18,7 +18,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-    'wbthomason/packer.nvim',
     'nvim-lualine/lualine.nvim',
     'nvim-tree/nvim-tree.lua',
     'ellisonleao/gruvbox.nvim',

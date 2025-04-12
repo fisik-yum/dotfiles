@@ -1,31 +1,180 @@
 {
-    "layer": "top",
-"position": "bottom",
-"height":30,
-    "modules-right": ["wireplumber","network","backlight","battery", "clock"],
-    "battery": {
-        "format": "{capacity}% discharging",
-	"format-charging": "{capacity}% charging",
-	"format-plugged": "{capacity}% plugged in"
-    },
-    "clock": {
-        "format-alt": "{:%a, %d. %b  %H:%M}"
-    },
-    "backlight":{
-	"format": "Brightness {percent}%",
-        "on-click-right": "brightnessctl set 10%-",
-        "on-click": "brightnessctl set +10%",
-},
-"wireplumber": {
-    "format": "{node_name} {volume}%",
-    "on-click": "pw-volume change +0.25%",
-    "on-click-right":"pw-volume change -0.25%",
-    "on-click-middle":"pavucontrol",
-},
-"network":{
-"format-wifi":"Connected to {essid}",
-"format-ethernet":"{ifname}",
-"format-disconnected": "Disconnected",
-"on-click":"nm-connection-editor",
-},
+	"layer": "top",
+	"position": "bottom",
+
+	"modules-left": [
+		"niri/workspaces",
+		"niri/window"
+	],
+
+	"modules-right": [
+		"pulseaudio",
+		"network",
+		"memory",
+		"cpu",
+		"temperature",
+		"battery",
+		"sway/language",
+		"tray",
+		"clock#date",
+		"clock#time"
+	],
+
+	// Modules
+
+	"battery": {
+		"interval": 10,
+		"states": {
+			"warning": 30,
+			"critical": 15
+		},
+		"format-time": "{H}:{M:02}",
+		"format": "BAT {capacity}% ({time})",
+		"format-charging": "BAT-C {capacity}% ({time})",
+		"format-charging-full": "BAT-CF {capacity}%",
+		"format-full": "BAT-F {capacity}%",
+		"format-alt": "{icon} {power}W",
+		"tooltip": false
+	},
+
+	"clock#time": {
+		"interval": 10,
+		"format": "{:%H:%M}",
+		"tooltip": false
+	},
+
+	"clock#date": {
+		"interval": 20,
+		"format": "{:%e %b %Y}",
+		"tooltip": false
+		//"tooltip-format": "{:%e %B %Y}"
+	},
+
+	"cpu": {
+		"interval": 5,
+		"tooltip": false,
+		"format": "CPU {usage}%",
+		"format-alt": "CPU {load}",
+		"states": {
+			"warning": 70,
+			"critical": 90
+		}
+	},
+
+	"sway/language": {
+		"format": "LANG {}",
+		"min-length": 5,
+		"on-click": "swaymsg 'input * xkb_switch_layout next'",
+		"tooltip": false
+	},
+
+	"memory": {
+		"interval": 5,
+		"format": "MEM {used:0.1f}G/{total:0.1f}G",
+		"states": {
+			"warning": 70,
+			"critical": 90
+		},
+		"tooltip": false
+	},
+
+	"network": {
+		"interval": 5,
+		"format-wifi": "W {essid} ({signalStrength}%)",
+		"format-ethernet": "E {ifname}",
+		"format-disconnected": "No connection",
+		"format-alt": "{ipaddr}/{cidr}",
+		"tooltip": false
+	},
+
+	"sway/mode": {
+		"format": "{}",
+		"tooltip": false
+	},
+
+	"sway/window": {
+		"format": "{}",
+		"max-length": 30,
+		"tooltip": false
+	},
+
+	"sway/workspaces": {
+		"disable-scroll-wraparound": true,
+		"smooth-scrolling-threshold": 4,
+		"enable-bar-scroll": true,
+		"format": "{name}"
+	},
+
+	"pulseaudio": {
+		"format": "VOL {volume}%",
+		"format-bluetooth": "{icon}BT {volume}%",
+		"format-muted": "MUTED",
+		"scroll-step": 1,
+		"on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+		"tooltip": false
+	},
+
+	"temperature": {
+		"critical-threshold": 90,
+		"interval": 5,
+		"format": "TEMP {temperatureC}°",
+		"tooltip": false
+	},
+
+	"tray": {
+		"icon-size": 20,
+		//"spacing": 10
+	},
+
+	//"custom/arrow1": {
+	//	"format": "",
+	//	"tooltip": false
+	//},
+
+	//"custom/arrow2": {
+	//	"format": "",
+	//	"tooltip": false
+	//},
+
+	//"custom/arrow3": {
+	//	"format": "",
+	//	"tooltip": false
+	//},
+
+	//"custom/arrow4": {
+	//	"format": "",
+	//	"tooltip": false
+	//},
+
+	//"custom/arrow5": {
+	//	"format": "",
+	//	"tooltip": false
+	//},
+
+	//"custom/arrow6": {
+	//	"format": "",
+	//	"tooltip": false
+	//},
+
+	//"custom/arrow7": {
+	//	"format": "",
+	//	"tooltip": false
+	//},
+
+	//"custom/arrow8": {
+	//	"format": "",
+	//	"tooltip": false
+	//},
+
+	//"custom/arrow9": {
+	//	"format": "",
+	//	"tooltip": false
+	//},
+
+	//"custom/arrow10": {
+	//	"format": "",
+	//	"tooltip": false
+	//}
 }
+
+// vi:ft=jsonc

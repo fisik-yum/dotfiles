@@ -1,9 +1,6 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-
---Pluginload
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -23,184 +20,16 @@ require('lazy').setup({
     'navarasu/onedark.nvim',
     'akinsho/toggleterm.nvim',
 
-    {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v4.x',
-        dependencies = {
-            -- LSP Support
-            'neovim/nvim-lspconfig',             -- Required
-            'williamboman/mason.nvim',           -- Optional
-            'williamboman/mason-lspconfig.nvim', -- Optional
-            -- Autocompletion
-            'hrsh7th/cmp-nvim-lsp',              -- Required
-            'hrsh7th/cmp-buffer',                -- Optional
-            'saadparwaiz1/cmp_luasnip',          -- Optional
-            {
-                "hrsh7th/nvim-cmp",
-                commit = "b356f2c",
-                pin = true,
-            },
-            -- Snippets
-            'L3MON4D3/LuaSnip',             -- Required
-            'rafamadriz/friendly-snippets', -- Optional
-        },
-    },
-    { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+    'neovim/nvim-lspconfig',
+    'williamboman/mason.nvim',
+    'williamboman/mason-lspconfig.nvim',
+    'hrsh7th/nvim-cmp', -- use lua 5.1 to prevent crashes
+    'hrsh7th/cmp-nvim-lsp',
+    'L3MON4D3/LuaSnip',
 
-
-    'lewis6991/gitsigns.nvim',
     'mg979/vim-visual-multi',
-    'm4xshen/autoclose.nvim',
-})
 
---GITSIGNS
-require('gitsigns').setup()
-
---LSP (autofmt)
---local lsp = require('lsp-zero')
-
--- Reserve a space in the gutter
--- This will avoid an annoying layout shift in the screen
-vim.opt.signcolumn = 'yes'
-
--- Add borders to floating windows
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
-    vim.lsp.handlers.hover,
-    { border = 'single' }
-)
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-    vim.lsp.handlers.signature_help,
-    { border = 'single' }
-)
-
--- Add cmp_nvim_lsp capabilities settings to lspconfig
--- This should be executed before you configure any language server
-local lspconfig_defaults = require('lspconfig').util.default_config
-lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-    'force',
-    lspconfig_defaults.capabilities,
-    require('cmp_nvim_lsp').default_capabilities()
-)
-
--- This is where you enable features that only work
--- if there is a language server active in the file
-vim.api.nvim_create_autocmd('LspAttach', {
-    callback = function(event)
-        local opts = { buffer = event.buf }
-
-        vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
-        vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaratimn()<cr>', opts)
-        vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
-        vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-        vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-        vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-    end,
-})
-
-
-
---NVIM-CMP
-local cmp = require('cmp')
-
-require('luasnip.loaders.from_vscode').lazy_load()
-
-vim.opt.completeopt = { 'menu', 'menuone', 'noinsert' }
-
-cmp.setup({
-    enabled = function()
-        -- disable completion in comments
-        local context = require 'cmp.config.context'
-        -- keep command mode completion enabled when cursor is in a comment
-        if vim.api.nvim_get_mode().mode == 'c' then
-            return true
-        else
-            return not context.in_treesitter_capture("comment")
-                and not context.in_syntax_group("Comment")
-        end
-    end,
-    preselect = cmp.PreselectMode.None,
-    completion = {
-        completeopt = 'menu,menuone,noinsert'
-    },
-    window = {
-        documentation = cmp.config.window.bordered(),
-    },
-    sources = {
-        { name = 'nvim_lsp' },
-        { name = 'luasnip', keyword_length = 2 },
-    },
-    snippet = {
-        expand = function(args)
-            require('luasnip').lsp_expand(args.body)
-        end,
-    },
-    formatting = {
-        fields = { 'abbr', 'menu', 'kind' },
-        format = function(entry, item)
-            local n = entry.source.name
-            if n == 'nvim_lsp' then
-                item.menu = '[LSP]'
-            else
-                item.menu = string.format('[%s]', n)
-            end
-            return item
-        end,
-    },
-    mapping = cmp.mapping.preset.insert({
-        -- confirm completion item
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
-
-        -- scroll documentation window
-        ['<C-f>'] = cmp.mapping.scroll_docs(5),
-        ['<C-u>'] = cmp.mapping.scroll_docs(-5),
-
-        -- toggle completion menu
-        ['<C-Space>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.abort()
-            else
-                cmp.complete()
-            end
-        end),
-
-        -- tab complete
-        ['<Tab>'] = cmp.mapping(function(fallback)
-            local col = vim.fn.col('.') - 1
-
-            if cmp.visible() then
-                cmp.select_next_item({ behavior = 'select' })
-            elseif col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
-                fallback()
-            else
-                cmp.complete()
-            end
-        end, { 'i', 's' }),
-
-        -- go to previous item
-        ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = 'select' }),
-
-        -- navigate to next snippet placeholder
-        ['<C-d>'] = cmp.mapping(function(fallback)
-            local luasnip = require('luasnip')
-
-            if luasnip.jumpable(1) then
-                luasnip.jump(1)
-            else
-                fallback()
-            end
-        end, { 'i', 's' }),
-
-        -- navigate to the previous snippet placeholder
-        ['<C-b>'] = cmp.mapping(function(fallback)
-            local luasnip = require('luasnip')
-
-            if luasnip.jumpable(-1) then
-                luasnip.jump(-1)
-            else
-                fallback()
-            end
-        end, { 'i', 's' }),
-    }),
+    { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 })
 
 --TREESITTER
@@ -252,7 +81,63 @@ require('mason-lspconfig').setup({
     },
 })
 
+-- LSP
+vim.api.nvim_create_autocmd('LspAttach', {
+    desc = 'LSP actions',
+    callback = function(event)
+        local opts = { buffer = event.buf }
 
+        vim.keymap.set('n', '<leader>k', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+        vim.keymap.set('n', '<Leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>')
+        vim.keymap.set('n', '<Leader>f', '<cmd>lua vim.lsp.buf.format()<CR>')
+        vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+        vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
+        vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
+        vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+        vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+        vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
+        vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+        vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+        vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+    end
+})
+
+local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+require('mason').setup({})
+require('mason-lspconfig').setup({
+    ensure_installed = {},
+    handlers = {
+        function(server_name)
+            require('lspconfig')[server_name].setup({
+                capabilities = lsp_capabilities,
+            })
+        end,
+    },
+})
+
+local cmp = require('cmp')
+cmp.setup({
+    preselect = cmp.PreselectMode.None,
+    completion = { completeopt = "menu,menuone,noselect" },
+    sources = {
+        { name = 'nvim_lsp' },
+    },
+    mapping = cmp.mapping.preset.insert({
+        -- Enter key confirms completion item
+        ['<CR>'] = cmp.mapping.confirm({ select = false }),
+        ['<Tab>'] = cmp.mapping.select_next_item(),
+        ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+
+        -- Ctrl + space triggers completion menu
+        ['<C-Space>'] = cmp.mapping.complete(),
+    }),
+    snippet = {
+        expand = function(args)
+            require('luasnip').lsp_expand(args.body)
+        end,
+    },
+})
 require('lualine').setup {
     options = {
         icons_enabled = false,
@@ -302,27 +187,16 @@ require("nvim-tree").setup({
         symlink_destination = true,
     },
 })
-
 --TOGGLETERM
 require("toggleterm").setup()
-
---nvim-autopairs
-require("autoclose").setup({
-    options = {
-        disabled_filetypes = { "text", "markdown" },
-    },
-})
 
 --Keymaps
 vim.g.mapleader = " "
 vim.keymap.set({ "n" }, "<Leader><tab>", "<Cmd>tabnext<CR>")
 vim.keymap.set({ "n" }, "<Leader>n<tab>", "<cmd>tabnew<CR>")
 vim.keymap.set({ "n" }, "<Leader>c<tab>", "<cmd>tabclose<CR>")
-vim.keymap.set({ "n" }, "<Leader>k", "<cmd>lua vim.lsp.buf.hover()<CR>")
 vim.keymap.set({ "n" }, "<Leader>l", "<Cmd>NvimTreeToggle<CR>")
-vim.keymap.set({ "n" }, "<Leader>f", "<cmd>LspZeroFormat<CR>")
 vim.keymap.set({ "n" }, "<Leader>tt", "<cmd>ToggleTerm<CR>")
-vim.keymap.set({ 'n' }, '<Leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>')
 --Preferences
 vim.opt.termguicolors = true
 vim.cmd([[colorscheme onedark]])
@@ -344,3 +218,4 @@ vim.diagnostic.config({
     severity_sort = false,
     float = true,
 })
+vim.opt.signcolumn = 'yes'

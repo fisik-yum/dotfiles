@@ -23,7 +23,10 @@ require('lazy').setup({
     'neovim/nvim-lspconfig',
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
-    'hrsh7th/nvim-cmp', -- use lua 5.1 to prevent crashes
+    {
+        'hrsh7th/nvim-cmp',
+        commit = 'b356f2c'
+    }, -- use lua 5.1 to prevent crashes
     'hrsh7th/cmp-nvim-lsp',
     'L3MON4D3/LuaSnip',
 
@@ -87,8 +90,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(event)
         local opts = { buffer = event.buf }
 
-        vim.keymap.set('n', '<leader>k', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
-        vim.keymap.set('n', '<Leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>')
+        vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+        vim.keymap.set('n', 'E', '<cmd>lua vim.diagnostic.open_float()<CR>')
         vim.keymap.set('n', '<Leader>f', '<cmd>lua vim.lsp.buf.format()<CR>')
         vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
         vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
@@ -102,26 +105,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 })
 
-local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-require('mason').setup({})
-require('mason-lspconfig').setup({
-    ensure_installed = {},
-    handlers = {
-        function(server_name)
-            require('lspconfig')[server_name].setup({
-                capabilities = lsp_capabilities,
-            })
-        end,
-    },
-})
-
+--local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 local cmp = require('cmp')
 cmp.setup({
     preselect = cmp.PreselectMode.None,
     completion = { completeopt = "menu,menuone,noselect" },
     sources = {
         { name = 'nvim_lsp' },
+        { name = 'luasnip' },
     },
     mapping = cmp.mapping.preset.insert({
         -- Enter key confirms completion item

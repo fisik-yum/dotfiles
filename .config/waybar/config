@@ -4,7 +4,7 @@
 
 	"modules-left": [
 		"niri/workspaces",
-		"niri/window"
+		"niri/window",
 	],
 
 	"modules-right": [
@@ -12,9 +12,7 @@
 		"network",
 		"memory",
 		"cpu",
-		"temperature",
 		"battery",
-		"sway/language",
 		"tray",
 		"clock#date",
 		"clock#time"
@@ -33,7 +31,7 @@
 		"format-charging": "BAT-C {capacity}% ({time})",
 		"format-charging-full": "BAT-CF {capacity}%",
 		"format-full": "BAT-F {capacity}%",
-		"format-alt": "{icon} {power}W",
+		"format-alt": "{power}W",
 		"tooltip": false
 	},
 
@@ -92,17 +90,17 @@
 		"tooltip": false
 	},
 
-	"sway/window": {
+	"niri/window": {
 		"format": "{}",
 		"max-length": 30,
 		"tooltip": false
 	},
 
-	"sway/workspaces": {
+	"niri/workspaces": {
 		"disable-scroll-wraparound": true,
 		"smooth-scrolling-threshold": 4,
 		"enable-bar-scroll": true,
-		"format": "{name}"
+		"format": "{index}"
 	},
 
 	"pulseaudio": {
@@ -125,56 +123,6 @@
 		"icon-size": 20,
 		//"spacing": 10
 	},
-
-	//"custom/arrow1": {
-	//	"format": "",
-	//	"tooltip": false
-	//},
-
-	//"custom/arrow2": {
-	//	"format": "",
-	//	"tooltip": false
-	//},
-
-	//"custom/arrow3": {
-	//	"format": "",
-	//	"tooltip": false
-	//},
-
-	//"custom/arrow4": {
-	//	"format": "",
-	//	"tooltip": false
-	//},
-
-	//"custom/arrow5": {
-	//	"format": "",
-	//	"tooltip": false
-	//},
-
-	//"custom/arrow6": {
-	//	"format": "",
-	//	"tooltip": false
-	//},
-
-	//"custom/arrow7": {
-	//	"format": "",
-	//	"tooltip": false
-	//},
-
-	//"custom/arrow8": {
-	//	"format": "",
-	//	"tooltip": false
-	//},
-
-	//"custom/arrow9": {
-	//	"format": "",
-	//	"tooltip": false
-	//},
-
-	//"custom/arrow10": {
-	//	"format": "",
-	//	"tooltip": false
-	//}
 }
 
 // vi:ft=jsonc

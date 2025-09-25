@@ -21,7 +21,7 @@ input {
     touchpad {
         // off
         tap
-        dwt
+        //dwt
         natural-scroll
         accel-speed 0.01
         accel-profile "adaptive"
@@ -72,7 +72,7 @@ output "eDP-1" {
     // so to put another output directly adjacent to it on the right, set its x to 1920.
     // If the position is unset or results in an overlap, the output is instead placed
     // automatically.
-    position x=1280 y=0
+    position x=0 y=0
 }
 
 // Settings that influence how windows are positioned and sized.
@@ -190,19 +190,22 @@ spawn-at-startup "waybar"
 spawn-at-startup "xwayland-satellite"
 spawn-at-startup "swww-daemon"
 spawn-at-startup "swww restore"
+spawn-at-startup "gammastep-indicator"
+spawn-at-startup "batsignal"
 
 environment {
     DISPLAY ":0"
     XDG_CURRENT_DESKTOP "sway"
 }
 switch-events {
-    lid-close { spawn "swaylock" "-i" "~/Pictures/Wallpapers/candh2.jpg"; }
+    lid-close { spawn "swaylock" "-i" "~/Pictures/Wallpapers/candh.png" "--font" "IBM Plex Mono" "-F" "-k" "--indicator-radius" "75" "--clock" "--indicator"; }
 }
 prefer-no-csd
 screenshot-path "~/Pictures/Screenshots/niri-%Y-%m-%d %H-%M-%S.png"
 
 animations {
 }
+
 
 /-window-rule {
     match app-id=r#"^org\.keepassxc\.KeePassXC$"#
@@ -211,14 +214,21 @@ animations {
     block-out-from "screen-capture"
 
 }
-
 /-window-rule {
     clip-to-geometry true
+}
+window-rule {
+    match app-id="librewolf$" title="^Picture-in-Picture$"
+    open-floating true
+    default-column-width { fixed 480; }
+    default-window-height { fixed 270; }
+    default-floating-position x=0 y=0 relative-to="bottom-right"
 }
 
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
-    Super+Alt+L { spawn "swaylock" "-i" "~/Pictures/Wallpapers/candh2.jpg"; }
+    //Super+Alt+L { spawn "swaylock" "-i" "~/Pictures/Wallpapers/candh2.jpg"; }
+    Mod+Alt+L { spawn "swaylock" "-i" "~/Pictures/Wallpapers/candh.png" "--font" "IBM Plex Mono" "-F" "-k" "--indicator-radius" "75" "--clock" "--indicator"; }
 
         Mod+Q { close-window; }
     Mod+Left  { focus-column-left; }
@@ -375,8 +385,8 @@ binds {
     XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
     XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
     XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
-    XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "set" "+5%"; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "set" "5%-"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "set" "+2.5%"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "set" "2.5%-"; }
     
 
     // The quit action will show a confirmation dialog to avoid accidental exits.

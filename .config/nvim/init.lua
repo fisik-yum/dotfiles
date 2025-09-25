@@ -33,6 +33,7 @@ require('lazy').setup({
     'mg979/vim-visual-multi',
 
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+    "airblade/vim-gitgutter"
 })
 
 --TREESITTER

@@ -15,7 +15,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-    'nvim-lualine/lualine.nvim',
+    --    'nvim-lualine/lualine.nvim',
     'nvim-tree/nvim-tree.lua',
     'navarasu/onedark.nvim',
     'akinsho/toggleterm.nvim',
@@ -23,17 +23,17 @@ require('lazy').setup({
     'neovim/nvim-lspconfig',
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
-    {
-        'hrsh7th/nvim-cmp',
-        commit = 'b356f2c'
-    }, -- use lua 5.1 to prevent crashes
-    'hrsh7th/cmp-nvim-lsp',
     'L3MON4D3/LuaSnip',
 
     'mg979/vim-visual-multi',
 
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
-    "airblade/vim-gitgutter"
+    {
+        'saghen/blink.cmp',
+        dependencies = { 'rafamadriz/friendly-snippets' },
+        version = '1.*',
+    },
+    "airblade/vim-gitgutter",
 })
 
 --TREESITTER
@@ -49,7 +49,8 @@ require 'nvim-treesitter.configs'.setup {
             end
         end,
 
-        additional_vim_regex_highlighting = false,
+        additional_vim_regex_highlighting = { "python" },
+        indent = {enable = false}
     },
 }
 
@@ -61,7 +62,7 @@ require('mason-lspconfig').setup({
         -- this first function is the "default handler"
         -- it applies to every language server without a custom handler
         function(server_name)
-            require('lspconfig')[server_name].setup({})
+            vim.lsp.config[server_name].setup({})
         end,
 
         -- this is the "custom handler" for `lua_ls`
@@ -106,36 +107,29 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 })
 
---local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-local cmp = require('cmp')
-cmp.setup({
-    preselect = cmp.PreselectMode.None,
-    completion = { completeopt = "menu,menuone,noselect" },
+require("blink.cmp").setup({
+    keymap = { preset = "default" },
+    fuzzy = { implementation = "prefer_rust" },
+    completion = {
+        documentation = {
+            auto_show = true,
+        },
+    },
     sources = {
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-    },
-    mapping = cmp.mapping.preset.insert({
-        -- Enter key confirms completion item
-        ['<CR>'] = cmp.mapping.confirm({ select = false }),
-        ['<Tab>'] = cmp.mapping.select_next_item(),
-        ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-
-        -- Ctrl + space triggers completion menu
-        ['<C-Space>'] = cmp.mapping.complete(),
-    }),
-    snippet = {
-        expand = function(args)
-            require('luasnip').lsp_expand(args.body)
-        end,
-    },
-})
-require('lualine').setup {
-    options = {
-        icons_enabled = false,
-        section_separators = { left = '', right = '' }
+        -- `lsp`, `buffer`, `snippets`, `path` and `omni` are built-in
+        -- so you don't need to define them in `sources.providers`
+        default = { 'lsp', 'snippets', 'path' },
     }
-}
+
+})
+
+--require('lualine').setup {
+--    options = {
+--        icons_enabled = false,
+--        section_separators = { left = '', right = '' }
+--    }
+--}
+
 
 --NVIM-TREE
 require("nvim-tree").setup({
@@ -198,7 +192,7 @@ vim.cmd([[set tabstop=4]])
 vim.cmd([[set shiftwidth=4]])
 vim.cmd([[set expandtab]])
 vim.cmd([[set mouse=]])
-vim.cmd([[set colorcolumn=80]])
+--vim.cmd([[set colorcolumn=80]])
 vim.cmd([[set relativenumber]])
 --vim.cmd([[highlight ColorColumn ctermbg=0 guibg=lavender]])
 

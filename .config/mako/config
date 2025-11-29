@@ -1,0 +1,20 @@
+sort=-time
+layer=overlay
+background-color=#282c34
+width=300
+height=110
+border-size=3
+border-color=#ffc87f
+icons=0
+max-icon-size=64
+font=IBM Plex Mono 12
+default-timeout=1500
+
+[urgency=low]
+border-color=#e5c07b
+
+[urgency=normal]
+border-color=#7fc8ff
+
+[urgency=high]
+border-color=#e06c75

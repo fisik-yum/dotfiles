@@ -204,7 +204,7 @@ environment {
     XDG_CURRENT_DESKTOP "sway"
 }
 switch-events {
-    lid-close { spawn "swaylock" "-i" "~/Pictures/Wallpapers/candh.png" "--font" "IBM Plex Mono" "-F" "-k" "--indicator-radius" "75" "--clock" "--indicator"; }
+    lid-close { spawn "swaylock" "-i" "~/Pictures/Wallpapers/Hood.jpg" "--font" "IBM Plex Mono" "-F" "-k" "--indicator-radius" "75" "--clock" "--indicator"; }
 }
 prefer-no-csd
 screenshot-path "~/Pictures/Screenshots/niri-%Y-%m-%d %H-%M-%S.png"

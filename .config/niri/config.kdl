@@ -13,9 +13,10 @@ input {
             // For more information, see xkeyboard-config(7).
 
             // For example:
-            // layout "us,ru"
-            // options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
+            layout "us,ta"
+            options "grp:alt_shift_toggle"
         }
+        track-layout "global"
     }
 
     touchpad {
@@ -142,7 +143,7 @@ layout {
         // - CSS-like notation: "rgb(255, 127, 0)", rgba(), hsl() and a few others.
 
         // Color of the ring on the active monitor.
-        active-color "#7fc8ff"
+        active-color "#e86671"
 
         // Color of the ring on inactive monitors.
         inactive-color "#505050"
@@ -194,18 +195,25 @@ layout {
 // Note that running niri as a session supports xdg-desktop-autostart,
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
-spawn-at-startup "waybar"
+//spawn-at-startup "waybar"
 spawn-at-startup "swww-daemon"
 spawn-at-startup "swww restore"
 spawn-at-startup "gammastep-indicator"
-spawn-at-startup "batsignal"
+//spawn-at-startup "batsignal"
+spawn-at-startup "iio-niri"
+spawn-sh-at-startup "ibus start --type=wayland"
 
 environment {
     XDG_CURRENT_DESKTOP "sway"
 }
 switch-events {
     lid-close { spawn "swaylock" "-i" "~/Pictures/Wallpapers/Hood.jpg" "--font" "IBM Plex Mono" "-F" "-k" "--indicator-radius" "75" "--clock" "--indicator"; }
+    //tablet-mode-on { spawn "bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled true"; }
+    tablet-mode-on {spawn "notify-send" "tablet mode enabled"; }
+    tablet-mode-off { spawn "bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled false"; }
 }
+
+
 prefer-no-csd
 screenshot-path "~/Pictures/Screenshots/niri-%Y-%m-%d %H-%M-%S.png"
 
@@ -234,9 +242,9 @@ window-rule {
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
     //Super+Alt+L { spawn "swaylock" "-i" "~/Pictures/Wallpapers/candh2.jpg"; }
-    Mod+Alt+L { spawn "swaylock" "-i" "~/Pictures/Wallpapers/candh.png" "--font" "IBM Plex Mono" "-F" "-k" "--indicator-radius" "75" "--clock" "--indicator"; }
-
-        Mod+Q { close-window; }
+    Mod+Alt+L { spawn "swaylock" "-i" "~/Pictures/Wallpapers/Hood.jpg" "--font" "IBM Plex Mono" "-F" "-k" "--indicator-radius" "75" "--clock" "--indicator"; }
+    
+    Mod+Q { close-window; }
     Mod+Left  { focus-column-left; }
     Mod+Down  { focus-window-down; }
     Mod+Up    { focus-window-up; }
@@ -387,8 +395,8 @@ binds {
     Alt+Period{spawn "playerctl" "next";}
     Alt+Comma{spawn "playerctl" "previous";}
 
-    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05+"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05-"; }
     XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
     XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
     XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "set" "+2.5%"; }

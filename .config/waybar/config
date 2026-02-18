@@ -14,6 +14,7 @@
 		"cpu",
 		"battery",
 		"tray",
+        "power-profiles-daemon",
 		"clock#date",
 		"clock#time"
 	],
@@ -40,7 +41,17 @@
 		"format": "{:%H:%M}",
 		"tooltip": false
 	},
-
+    "power-profiles-daemon": {
+      "format": "{icon}",
+      "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+      "tooltip": true,
+      "format-icons": {
+        "default": "P(D)",
+        "performance": "P(P)",
+        "balanced": "P(B)",
+        "power-saver": "P(S)"
+      }
+    },
 	"clock#date": {
 		"interval": 20,
 		"format": "{:%e %b %Y}",

@@ -53,6 +53,7 @@
 @define-color layout @yellow;
 @define-color battery @green;
 @define-color date @light_grey;
+@define-color power @light_grey;
 @define-color time @grey;
 
 /* Reset all styles */
@@ -115,7 +116,7 @@
 #cpu.warning,
 #temperature.warning,
 #battery.warning.discharging {
-    background: @bg-yellow;
+    background: @yellow;
 }
 
 /* Workspaces stuff */
@@ -202,6 +203,11 @@
 
 #clock.time {
     background: @time;
+    color: @black;
+}
+
+#power-profiles-daemon{
+    background: @power;
     color: @black;
 }
 

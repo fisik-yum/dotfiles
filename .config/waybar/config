@@ -14,7 +14,7 @@
 		"cpu",
 		"battery",
 		"tray",
-        "power-profiles-daemon",
+        "idle_inhibitor",
 		"clock#date",
 		"clock#time"
 	],
@@ -41,9 +41,18 @@
 		"format": "{:%H:%M}",
 		"tooltip": false
 	},
+    "idle_inhibitor": {
+		"interval": 10,
+		"format": "{icon}",
+        "format-icons":{
+            "activated":"A",
+            "deactivated":"*"
+        },
+		"tooltip": false
+	},
     "power-profiles-daemon": {
       "format": "{icon}",
-      "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+      "tooltip-format-activated": "Power profile: {profile}\nDriver: {driver}",
       "tooltip": true,
       "format-icons": {
         "default": "P(D)",

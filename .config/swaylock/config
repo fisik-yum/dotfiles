@@ -1,0 +1,7 @@
+image=~/Pictures/Wallpapers/Hood.jpg
+font=IBM Plex Mono
+indicator-radius=75
+clock
+indicator
+show-failed-attempts
+show-keyboard-layout

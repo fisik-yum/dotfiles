@@ -92,6 +92,8 @@
 #idle_inhibitor,
 #disk,
 #user,
+#clock.date,
+#clock.time,
 #mpris {
     padding-left: 8pt;
     padding-right: 8pt;
@@ -211,4 +213,8 @@
     color: @black;
 }
 
+#idle_inhibitor{
+    background: @power;
+    color: @black;
+}
 

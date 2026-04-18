@@ -10,7 +10,7 @@ input {
     touchpad {
         // off
         tap
-        dwt
+        //dwt
         natural-scroll
         accel-speed 0.1
         accel-profile "adaptive"
@@ -72,8 +72,8 @@ layout {
 
 }
 
-spawn-at-startup "swww-daemon"
-spawn-at-startup "swww restore"
+spawn-at-startup "awww-daemon"
+spawn-at-startup "awww restore"
 spawn-at-startup "gammastep-indicator"
 spawn-at-startup "iio-niri"
 
@@ -82,8 +82,9 @@ environment {
 }
 switch-events {
     lid-close { spawn "swaylock"; }
-    tablet-mode-on {spawn "notify-send" "tablet mode enabled"; }
-    tablet-mode-off { spawn "bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled false"; }
+    // tablet-mode-on {spawn "sysboard"; }
+    tablet-mode-off { spawn "bash" "-c" "pkill sysboard"; }
+    tablet-mode-on { spawn "notify-send" "test"; }
 }
 
 

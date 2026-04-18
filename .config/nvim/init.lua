@@ -41,16 +41,19 @@ require("lazy").setup({
 	"barrettruth/live-server.nvim",
 })
 
+-- TREESITTER
 require("nvim-treesitter").setup({
 	install_dir = vim.fn.stdpath("data") .. "/site",
 })
+
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "go", "gomod", "lua", "rust", "gotempl", "markdown" },
 	callback = function()
 		vim.treesitter.start()
 	end,
 })
---MASON
+
+-- MASON
 require("mason").setup({})
 require("mason-lspconfig").setup({
 	ensure_installed = {},
